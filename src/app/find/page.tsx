@@ -27,7 +27,7 @@ function App() {
       const imageBase64 = reader.result?.toString().split(',')[1];
 
       try {
-        const response = await axios.post('https://51d6-212-104-229-51.ngrok-free.app/find_similar', {
+        const response = await axios.post('https://4b18-212-104-229-51.ngrok-free.app/find_similar', {
           description: description,
           image: imageBase64
         });
@@ -76,7 +76,7 @@ function App() {
         <div className="mt-8 w-full max-w-md">
           {results.map((result, index) => (
             <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
-              <img src={`https://51d6-212-104-229-51.ngrok-free.app/images/${result.image_path}`} alt="Similar Item" className="w-full mt-2 rounded" />
+              <img src={`https://4b18-212-104-229-51.ngrok-free.app/images/${result.image_path}`} alt="Similar Item" className="w-full mt-2 rounded" />
               <p className="text-gray-500 mt-2">Similarity: {result.similarity.toFixed(4)}</p>
             </div>
           ))}
@@ -87,3 +87,5 @@ function App() {
 }
 
 export default App;
+
+// https://4b18-212-104-229-51.ngrok-free.app

@@ -1,113 +1,131 @@
-import Image from "next/image";
+"use client"
 
-export default function Home() {
+import React, { useState } from 'react';
+import Card from "@/components/card";
+import Hero from "./sections/Hero";
+import Social from "./sections/social/Socials";
+import Footer from "./sections/Footer";
+import Navbar from "@/components/navBar";
+import Results from "./sections/social/Results";
+
+const Home: React.FC = () => {
+  const [location, setLocation] = useState<string>('');
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <main>
+      <Navbar />
+      <Hero />
+      <div className="px-7 lg:px-[7.25rem]">
+        <div className="flex w-full mx-auto lg:gap-10 relative -top-4 lg:-top-10 max-w-7xl flex-col lg:flex-row lg:justify-between space-y-[1.88rem] lg:space-y-0">
+          <div className="flex flex-col w-full lg:w-[50%]">
+            <Card
+              imageSrc="/discover.svg"
+              altText="discover_logo"
+              title="Advanced Matching Algorithms"
+              description="Our service harnesses the power of three innovative ML models to ensure highly accurate matches. With distinct models for text matching, image recognition, and a fusion of both, our platform offers unparalleled precision in matching lost items to their finders or owners."
+              buttonText="Schedule a Meeting >"
+              className="h-full"
             />
-          </a>
+          </div>
+          <div className="flex flex-col w-full lg:w-[50%]">
+            <Card
+              imageSrc="/discover.svg"
+              altText="sales_suite_logo"
+              title="User-Friendly Interface"
+              description="Our streamlined process is designed with your convenience in mind. With just a few clicks, you can swiftly upload images and furnish comprehensive descriptions, all without any unnecessary complications. Our intuitive interface guides you through each step seamlessly, ensuring that your submission is both effortless and thorough."
+              buttonText="Schedule a Meeting >"
+              className="h-full"
+            />
+          </div>
+          <div className="flex flex-col w-full lg:w-[50%]">
+            <Card
+              imageSrc="/discover.svg"
+              altText="sales_suite_logo"
+              title="Community Driven"
+              description="Our platform does more than just reunite belongings with their owners; it builds a supportive network of individuals united by the spirit of helpfulness and mutual respect. By participating in our service, you contribute to a vibrant community that values connection and care."
+              buttonText="Schedule a Meeting >"
+              className="h-full"
+            />
+          </div>
         </div>
+        <Social />
+        {location === "homagama" ? (
+          <div>
+            <Results
+              imageUrl="/img/blue/2 (1).jpg"
+              description="A Asus black laptop backpack with a red stripe. The bag has a small tear on the left shoulder strap."
+              location="Found at the bus stop near the Central Park."
+              name="Pitipana"
+              contact="0731130233"
+            />
+            <Results
+              imageUrl="/img/blue/2 (2).jpg"
+              description="A black laptop bag. The bag has a small tear on the left shoulder strap."
+              location="Homagama"
+              name="John Doe"
+              contact="0771130333"
+            />
+            <Results
+              imageUrl="/img/blue/2 (3).jpg"
+              description="Found a black backpack near Homagama bus stand."
+              location="Homagama"
+              name="John Doe"
+              contact="0721130433"
+            />
+          </div>
+        ) : location === "kottawa" ? (
+          <div>
+            <Results
+              imageUrl="/img/gray/3 (1).jpg"
+              description="A Asus black laptop backpack with a red stripe. The bag has a small tear on the left shoulder strap."
+              location="Found at the bus stop near the Central Park."
+              name="Pitipana"
+              contact="0731130233"
+            />
+            <Results
+              imageUrl="/img/gray/3 (2).jpg"
+              description="A black laptop bag. The bag has a small tear on the left shoulder strap."
+              location="Homagama"
+              name="John Doe"
+              contact="0771130333"
+            />
+            <Results
+              imageUrl="/img/gray/3 (3).jpg"
+              description="Found a black backpack near Homagama bus stand."
+              location="Homagama"
+              name="John Doe"
+              contact="0721130433"
+            />
+          </div>
+        ) : (
+          <div>
+            <Results
+              imageUrl="/img/gray/3 (1).jpg"
+              description="A Asus black laptop backpack with a red stripe. The bag has a small tear on the left shoulder strap."
+              location="Found at the bus stop near the Central Park."
+              name="Pitipana"
+              contact="0731130233"
+            />
+            <Results
+              imageUrl="/img/gray/3 (2).jpg"
+              description="A black laptop bag. The bag has a small tear on the left shoulder strap."
+              location="Homagama"
+              name="John Doe"
+              contact="0771130333"
+            />
+            <Results
+              imageUrl="/img/gray/3 (3).jpg"
+              description="Found a black backpack near Homagama bus stand."
+              location="Homagama"
+              name="John Doe"
+              contact="0721130433"
+            />
+          </div>
+        )}
       </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      <Footer />
     </main>
   );
-}
+};
+
+export default Home;

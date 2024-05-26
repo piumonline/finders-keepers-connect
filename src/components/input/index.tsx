@@ -43,7 +43,7 @@ const ImageInput: React.FC = () => {
                 ) : (
                     <input type="file" accept="image/*" onChange={handleImageChange} className="form-input block w-full mt-1" />
                 )}
-                <textarea value={description} onChange={onDescriptionChange}  className="form-textarea block w-full mt-1 border border-black p-4" placeholder="Enter description here..." />
+                {/* <textarea value={description} onChange={onDescriptionChange}  className="form-textarea block w-full mt-1 border border-black p-4" placeholder="Enter description here..." /> */}
                 <input type="text" className="form-input block w-full mt-1 border border-black p-4" placeholder="Enter the location" />
                 <input type="text" className="form-input block w-full mt-1 border border-black p-4" placeholder="Enter your Name" />
                 <input type="text" className="form-input block w-full mt-1 border border-black p-4" placeholder="Enter your Contact Number" />

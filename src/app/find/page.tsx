@@ -27,7 +27,7 @@ function App() {
       const imageBase64 = reader.result?.toString().split(',')[1];
 
       try {
-        const response = await axios.post('https://rude-wolves-wave.loca.lt/find_similar', {
+        const response = await axios.post('https://happy-sides-act.loca.lt/find_similar', {
           description: description,
           image: imageBase64
         });
@@ -76,7 +76,7 @@ function App() {
         <div className="mt-8 w-full max-w-md">
           {results.map((result, index) => (
             <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
-              <img src={`https://rude-wolves-wave.loca.lt/images/${result.image_path}`} alt="Similar Item" className="w-full mt-2 rounded" />
+              <img src={`https://happy-sides-act.loca.lt/images/${result.image_path}`} alt="Similar Item" className="w-full mt-2 rounded" />
               <p className="text-gray-500 mt-2">Similarity: {result.similarity.toFixed(4)}</p>
             </div>
           ))}

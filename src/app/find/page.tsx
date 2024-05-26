@@ -76,9 +76,7 @@ function App() {
         <div className="mt-8 w-full max-w-md">
           {results.map((result, index) => (
             <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
-              {/* {console.log(result.image_path)} */}
-              {/* <img src={`http://127.0.0.1:5000/${result.image_path}`} alt="Similar Item" className="w-full mt-2 rounded" /> */}
-              <img src={`http://localhost:5000/images/${result.image_path.replace(/\\/g, '/')}`} alt="Similar Item" className="w-full mt-2 rounded" />
+              <img src={`http://127.0.0.1:5000/images/${result.image_path}`} alt="Similar Item" className="w-full mt-2 rounded" />
               <p className="text-gray-500 mt-2">Similarity: {result.similarity.toFixed(4)}</p>
             </div>
           ))}

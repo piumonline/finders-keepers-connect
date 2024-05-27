@@ -1,24 +1,58 @@
 "use client"
 
 import React, { useState } from 'react';
-import axios from 'axios';
+import Step1 from './BagDescription';
+import Step2 from './UserDescription';
+import ProgressIndicator from '@/components/stepper';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-function App() {
-  const [description, setDescription] = useState<string>('');
-  const [image, setImage] = useState<File | null>(null);
-  const [results, setResults] = useState<Array<{ description: string, image_path: string, similarity: number }>>([]);
+const App: React.FC = () => {
+  const [step, setStep] = useState<number>(1);
+  const [formData, setFormData] = useState({
+    description: '',
+    image: null,
+    itemType: 'lost',
+    location: '',
+    name: '',
+    email: '',
+    phone: '',
+    imagePreview: null
+  });
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value);
+  const handleNextStep = () => {
+    setStep(step + 1);
+  };
+
+  const handlePreviousStep = () => {
+    setStep(step - 1);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        setFormData({ ...formData, image: file, imagePreview: reader.result as string });
+      };
+      reader.readAsDataURL(file);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const { description, image, itemType, location, name, email, phone } = formData;
+    if (!name || !email || !phone) {
+      toast.error('Please fill out all user details.');
+      return;
+    }
     if (!image) {
-      alert('Please upload an image.');
+      toast.error('Please upload an image.');
       return;
     }
     const reader = new FileReader();
@@ -27,65 +61,63 @@ function App() {
       const imageBase64 = reader.result?.toString().split(',')[1];
 
       try {
-        const response = await axios.post('https://4b18-212-104-229-51.ngrok-free.app/find_similar', {
-          description: description,
-          image: imageBase64
+        const response = await axios.post('http://127.0.0.1:5000/find_similar', {
+          description,
+          image: imageBase64,
+          type: itemType,
+          location,
+          name,
+          email,
+          phone,
         });
 
-        setResults(response.data);
+        toast.success('Item submitted successfully!');
+        setFormData({
+          description: '',
+          image: null,
+          itemType: 'lost',
+          location: '',
+          name: '',
+          email: '',
+          phone: '',
+          imagePreview: null
+        });
+        setStep(1);
       } catch (error) {
         console.error('Error finding similar items:', error);
+        toast.error('Failed to submit item. Please try again.');
       }
     };
     reader.onerror = (error) => {
       console.error('Error reading image file:', error);
+      toast.error('Failed to read image file.');
     };
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center">
-      <header className="bg-blue-600 w-full py-4 text-white text-center text-2xl">
-        Lost and Found Item Matching
-      </header>
-      <main className="flex flex-col items-center mt-8">
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-          <div className="mb-4">
-            <label htmlFor="description" className="block text-gray-700">Text Description:</label>
-            <input
-              type="text"
-              id="description"
-              value={description}
-              onChange={handleDescriptionChange}
-              className="w-full mt-2 p-2 border rounded"
+      <ToastContainer />
+      <main className="flex flex-col items-center mt-8 w-full">
+        <ProgressIndicator step={step} setStep={setStep} />
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-5xl">
+          {step === 1 ? (
+            <Step1
+              formData={formData}
+              handleChange={handleChange}
+              handleImageChange={handleImageChange}
+              handleNextStep={handleNextStep}
             />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="image" className="block text-gray-700">Image:</label>
-            <input
-              type="file"
-              id="image"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="w-full mt-2 p-2 border rounded"
+          ) : (
+            <Step2
+              formData={formData}
+              handleChange={handleChange}
+              handlePreviousStep={handlePreviousStep}
             />
-          </div>
-          <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-            Find Similar
-          </button>
+          )}
         </form>
-        <div className="mt-8 w-full max-w-md">
-          {results.map((result, index) => (
-            <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
-              <img src={`https://4b18-212-104-229-51.ngrok-free.app/images/${result.image_path}`} alt="Similar Item" className="w-full mt-2 rounded" />
-              <p className="text-gray-500 mt-2">Similarity: {result.similarity.toFixed(4)}</p>
-            </div>
-          ))}
-        </div>
       </main>
     </div>
   );
-}
+};
 
 export default App;
-
-// https://4b18-212-104-229-51.ngrok-free.app

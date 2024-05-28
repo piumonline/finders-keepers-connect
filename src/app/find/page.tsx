@@ -5,7 +5,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const API_URL = 'https://66a4-112-134-247-216.ngrok-free.app';
+const API_URL = 'https://7193-112-134-247-216.ngrok-free.app';
 
 function App() {
   const [description, setDescription] = useState<string>("");
@@ -188,9 +188,6 @@ function App() {
           {results.map((result, index) => (
             <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
               <p className="text-gray-700 font-semibold">Description: {result.description}</p>
-              {console.log(result.image_filename)}
-              
-
 
               <img
               

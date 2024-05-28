@@ -186,7 +186,7 @@ function App() {
               <p className="text-gray-700 font-semibold">Description: {result.description}</p>
               <img
               
-              src={`https://53b3-212-104-231-145.ngrok-free.app/images/${result.image_filename}`}
+                src={result.image_filename}
                 alt="Similar Item"
                 className="w-full mt-2 rounded"
               />

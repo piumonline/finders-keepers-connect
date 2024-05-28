@@ -50,7 +50,7 @@ function App() {
       const imageBase64 = reader.result?.toString().split(",")[1];
 
       try {
-        const response = await axios.post("https://031b-212-104-231-145.ngrok-free.app/find_similar", {
+        const response = await axios.post("https://53b3-212-104-231-145.ngrok-free.app/find_similar", {
           description: description,
           image: imageBase64,
           type: itemType,
@@ -81,7 +81,7 @@ function App() {
     console.log('img',result.image_similarity)
     console.log('location',result.location_similarity)
     try {
-      await axios.post("https://031b-212-104-231-145.ngrok-free.app/feedback", {
+      await axios.post("https://53b3-212-104-231-145.ngrok-free.app/feedback", {
         text_similarity: result.text_similarity,
         image_similarity: result.image_similarity,
         location_similarity: result.location_similarity,

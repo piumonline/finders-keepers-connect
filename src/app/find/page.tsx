@@ -5,7 +5,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const API_URL = 'https://7193-112-134-247-216.ngrok-free.app';
+const API_URL = 'https://961b-112-134-247-216.ngrok-free.app';
 
 function App() {
   const [description, setDescription] = useState<string>("");

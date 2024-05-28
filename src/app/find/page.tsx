@@ -50,7 +50,7 @@ function App() {
       const imageBase64 = reader.result?.toString().split(",")[1];
 
       try {
-        const response = await axios.post("https://53b3-212-104-231-145.ngrok-free.app/find_similar", {
+        const response = await axios.post("https://1751-212-104-231-145.ngrok-free.app/find_similar", {
           description: description,
           image: imageBase64,
           type: itemType,
@@ -74,6 +74,7 @@ function App() {
     };
   };
 
+
   const handleFeedback = async (index: number, isCorrect: boolean) => {
     const result = results[index];
     console.log(result)
@@ -81,7 +82,7 @@ function App() {
     console.log('img',result.image_similarity)
     console.log('location',result.location_similarity)
     try {
-      await axios.post("https://53b3-212-104-231-145.ngrok-free.app/feedback", {
+      await axios.post("https://1751-212-104-231-145.ngrok-free.app/feedback", {
         text_similarity: result.text_similarity,
         image_similarity: result.image_similarity,
         location_similarity: result.location_similarity,
@@ -181,12 +182,17 @@ function App() {
           </button>
         </form>
         <div className="mt-8 w-full max-w-lg">
+          <img src="https://1751-212-104-231-145.ngrok-free.app/images/1716892869.873784.png" alt="Similar Item"/>
           {results.map((result, index) => (
             <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
               <p className="text-gray-700 font-semibold">Description: {result.description}</p>
+              {console.log(result.image_filename)}
+              
+
+
               <img
               
-                src={result.image_filename}
+              src={`https://1751-212-104-231-145.ngrok-free.app/images/${result.image_filename}`}
                 alt="Similar Item"
                 className="w-full mt-2 rounded"
               />

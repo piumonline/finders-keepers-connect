@@ -1,221 +1,123 @@
-"use client";
+"use client"
 
-import React, { useState } from "react";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from 'react';
+import Step1 from './BagDescription';
+import Step2 from './UserDescription';
+import ProgressIndicator from '@/components/stepper';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const API_URL = 'https://961b-112-134-247-216.ngrok-free.app';
+const App: React.FC = () => {
+  const [step, setStep] = useState<number>(1);
+  const [formData, setFormData] = useState({
+    description: '',
+    image: null,
+    itemType: 'lost',
+    location: '',
+    name: '',
+    email: '',
+    phone: '',
+    imagePreview: null
+  });
 
-function App() {
-  const [description, setDescription] = useState<string>("");
-  const [image, setImage] = useState<File | null>(null);
-  const [itemType, setItemType] = useState<string>("lost");
-  const [location, setLocation] = useState<string>("");
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [results, setResults] = useState<
-    Array<{
-      description: string;
-      image_filename: string;
-      total_similarity: number;
-      text_similarity: number;
-      image_similarity: number;
-      location_similarity: number;
-      time_similarity: number;
-    }>
-  >([]);
+  const handleNextStep = () => {
+    setStep(step + 1);
+  };
 
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setDescription(e.target.value);
+  const handlePreviousStep = () => {
+    setStep(step - 1);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
+      const file = e.target.files[0];
       const reader = new FileReader();
-      reader.onload = () => setImagePreview(reader.result as string);
-      reader.readAsDataURL(e.target.files[0]);
+      reader.onload = () => {
+        setFormData({ ...formData, image: file, imagePreview: reader.result as string });
+      };
+      reader.readAsDataURL(file);
     }
   };
-  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
-    setItemType(e.target.value);
-  const handleLocationChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setLocation(e.target.value);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const { description, image, itemType, location, name, email, phone } = formData;
+    if (!name || !email || !phone) {
+      toast.error('Please fill out all user details.');
+      return;
+    }
     if (!image) {
-      toast.error("Please upload an image.");
+      toast.error('Please upload an image.');
       return;
     }
     const reader = new FileReader();
     reader.readAsDataURL(image);
     reader.onload = async () => {
-      const imageBase64 = reader.result?.toString().split(",")[1];
+      const imageBase64 = reader.result?.toString().split(',')[1];
 
       try {
-        const response = await axios.post(`${API_URL}/find_similar`, {
-          description: description,
+        const response = await axios.post('http://127.0.0.1:5000/find_similar', {
+          description,
           image: imageBase64,
           type: itemType,
-          location: location,
+          location,
+          name,
+          email,
+          phone,
         });
 
-        setResults(response.data);
-        toast.success("Item submitted successfully!");
-        setDescription("");
-        setImage(null);
-        setImagePreview(null);
-        setLocation("");
+        toast.success('Item submitted successfully!');
+        setFormData({
+          description: '',
+          image: null,
+          itemType: 'lost',
+          location: '',
+          name: '',
+          email: '',
+          phone: '',
+          imagePreview: null
+        });
+        setStep(1);
       } catch (error) {
-        console.error("Error finding similar items:", error);
-        toast.error("Failed to submit item. Please try again.");
+        console.error('Error finding similar items:', error);
+        toast.error('Failed to submit item. Please try again.');
       }
     };
     reader.onerror = (error) => {
-      console.error("Error reading image file:", error);
-      toast.error("Failed to read image file.");
+      console.error('Error reading image file:', error);
+      toast.error('Failed to read image file.');
     };
-  };
-
-
-  const handleFeedback = async (index: number, isCorrect: boolean) => {
-    const result = results[index];
-    console.log(result)
-    console.log('text',result.text_similarity)
-    console.log('img',result.image_similarity)
-    console.log('location',result.location_similarity)
-    try {
-      await axios.post(`${API_URL}/feedback`, {
-        text_similarity: result.text_similarity,
-        image_similarity: result.image_similarity,
-        location_similarity: result.location_similarity,
-        time_similarity: result.time_similarity,
-        total_similarity: result.total_similarity,
-        is_correct: isCorrect,
-      });
-      toast.success("Feedback submitted successfully!");
-    } catch (error) {
-      console.error("Error submitting feedback:", error);
-      toast.error("Failed to submit feedback. Please try again.");
-    }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center">
       <ToastContainer />
-
       <main className="flex flex-col items-center mt-8 w-full">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg"
-        >
-          <div className="mb-4">
-            <label
-              htmlFor="description"
-              className="block text-gray-700 font-semibold"
-            >
-              Text Description:
-            </label>
-            <input
-              type="text"
-              id="description"
-              value={description}
-              onChange={handleDescriptionChange}
-              className="w-full mt-2 p-2 border border-gray-300 rounded"
-              placeholder="Describe the item"
+        <ProgressIndicator step={step} setStep={setStep} />
+        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-5xl">
+          {step === 1 ? (
+            <Step1
+              formData={formData}
+              handleChange={handleChange}
+              handleImageChange={handleImageChange}
+              handleNextStep={handleNextStep}
             />
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="type"
-              className="block text-gray-700 font-semibold"
-            >
-              Type:
-            </label>
-            <select
-              id="type"
-              value={itemType}
-              onChange={handleTypeChange}
-              className="w-full mt-2 p-2 border border-gray-300 rounded"
-            >
-              <option value="lost">Lost</option>
-              <option value="found">Found</option>
-            </select>
-          </div>
-          <div className="mb-4">
-            <label
-              htmlFor="location"
-              className="block text-gray-700 font-semibold"
-            >
-              Location:
-            </label>
-            <input
-              type="text"
-              id="location"
-              value={location}
-              onChange={handleLocationChange}
-              className="w-full mt-2 p-2 border border-gray-300 rounded"
-              placeholder="Location where the item was lost or found"
+          ) : (
+            <Step2
+              formData={formData}
+              handleChange={handleChange}
+              handlePreviousStep={handlePreviousStep}
             />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="image" className="block text-gray-700 font-semibold">
-              Image:
-            </label>
-            <input
-                          type="file"
-              id="image"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="w-full mt-2 p-2 border border-gray-300 rounded"
-            />
-            {imagePreview && (
-              <img
-                src={imagePreview}
-                alt="Image Preview"
-                className="w-full mt-4 rounded"
-              />
-            )}
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200"
-          >
-            Find Similar
-          </button>
+          )}
         </form>
-        <div className="mt-8 w-full max-w-lg">
-          <img src={`${API_URL}/images/1716892869.873784.png`} alt="Similar Item"/>
-          {results.map((result, index) => (
-            <div key={index} className="bg-white p-4 rounded-lg shadow-md mb-4">
-              <p className="text-gray-700 font-semibold">Description: {result.description}</p>
-
-              <img
-              
-              src={`${API_URL}/images/${result.image_filename}`}
-                alt="Similar Item"
-                className="w-full mt-2 rounded"
-              />
-              <p className="text-gray-500 mt-2">Similarity: {result.total_similarity.toFixed(4)}</p>
-              <button
-                onClick={() => handleFeedback(index, true)}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200 mt-2 mr-2"
-              >
-                Correct Match
-              </button>
-              <button
-                onClick={() => handleFeedback(index, false)}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-200 mt-2"
-              >
-                Incorrect Match
-              </button>
-            </div>
-          ))}
-        </div>
       </main>
     </div>
   );
-}
+};
 
 export default App;
-
-             

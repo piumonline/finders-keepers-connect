@@ -7,6 +7,8 @@ interface Step2Props {
 }
 
 const Step2: React.FC<Step2Props> = ({ formData, handleChange, handlePreviousStep }) => {
+  const isSubmitDisabled = !formData.name || !formData.email || !formData.phone;
+
   return (
     <>
       <div className="mb-4">
@@ -45,11 +47,19 @@ const Step2: React.FC<Step2Props> = ({ formData, handleChange, handlePreviousSte
           placeholder="Your phone number"
         />
       </div>
-      <div className="flex justify-between">
-        <button type="button" onClick={handlePreviousStep} className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-200">
+      <div className="flex justify-end space-x-4">
+        <button
+          type="button"
+          onClick={handlePreviousStep}
+          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition duration-200"
+        >
           Previous
         </button>
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200">
+        <button
+          type="submit"
+          disabled={isSubmitDisabled}
+          className={`bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200 ${isSubmitDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+        >
           Submit
         </button>
       </div>

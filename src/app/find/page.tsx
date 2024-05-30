@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import Step1 from './BagDescription';
 import Step2 from './UserDescription';
 import ProgressIndicator from '@/components/stepper';
+import ResultCard from './ResultCard';
+import ResultModal from './ResultModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,8 +21,16 @@ const App: React.FC = () => {
     phone: '',
     imagePreview: null
   });
+  const [similarItems, setSimilarItems] = useState<any[]>([]);
+  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleNextStep = () => {
+    const { description, image, location } = formData;
+    if (!description || !image || !location) {
+      toast.error('Please fill out all fields and upload an image.');
+      return;
+    }
     setStep(step + 1);
   };
 
@@ -38,7 +48,7 @@ const App: React.FC = () => {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.onload = () => {
-        setFormData({ ...formData, image: file, imagePreview: reader.result as string });
+        setFormData({ ...formData, image: file as any, imagePreview: reader.result as any });
       };
       reader.readAsDataURL(file);
     }
@@ -55,43 +65,68 @@ const App: React.FC = () => {
       toast.error('Please upload an image.');
       return;
     }
-    const reader = new FileReader();
-    reader.readAsDataURL(image);
-    reader.onload = async () => {
-      const imageBase64 = reader.result?.toString().split(',')[1];
 
-      try {
-        const response = await axios.post('http://127.0.0.1:5000/find_similar', {
-          description,
-          image: imageBase64,
-          type: itemType,
-          location,
-          name,
-          email,
-          phone,
-        });
-
-        toast.success('Item submitted successfully!');
-        setFormData({
-          description: '',
-          image: null,
-          itemType: 'lost',
-          location: '',
-          name: '',
-          email: '',
-          phone: '',
-          imagePreview: null
-        });
-        setStep(1);
-      } catch (error) {
-        console.error('Error finding similar items:', error);
-        toast.error('Failed to submit item. Please try again.');
+    // Dummy data to simulate response
+    const dummyData = [
+      {
+        description: 'black womans purse',
+        image_filename: '1716895371.769643.png',
+        image_similarity: 0.7291116655005888,
+        location_similarity: 1,
+        text_similarity: 0.09315735126457052,
+        time_similarity: 1,
+        total_similarity: 0.871260404586792
+      },
+      {
+        description: 'blue backpack',
+        image_filename: '1716895371.769644.png',
+        image_similarity: 0.6752234995005888,
+        location_similarity: 0.9,
+        text_similarity: 0.12315735126457052,
+        time_similarity: 0.95,
+        total_similarity: 0.850260404586792
+      },
+      {
+        description: 'red handbag',
+        image_filename: '1716895371.769645.png',
+        image_similarity: 0.7891116655005888,
+        location_similarity: 0.8,
+        text_similarity: 0.19315735126457052,
+        time_similarity: 0.88,
+        total_similarity: 0.845260404586792
       }
-    };
-    reader.onerror = (error) => {
-      console.error('Error reading image file:', error);
-      toast.error('Failed to read image file.');
-    };
+    ];
+
+    try {
+      // Simulate API response
+      setSimilarItems(dummyData);
+
+      toast.success('Item submitted successfully!');
+      setFormData({
+        description: '',
+        image: null,
+        itemType: 'lost',
+        location: '',
+        name: '',
+        email: '',
+        phone: '',
+        imagePreview: null
+      });
+      setStep(1);
+    } catch (error) {
+      console.error('Error finding similar items:', error);
+      toast.error('Failed to submit item. Please try again.');
+    }
+  };
+
+  const showModal = (item: any) => {
+    setSelectedItem(item);
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setSelectedItem(null);
+    setIsModalVisible(false);
   };
 
   return (
@@ -115,6 +150,23 @@ const App: React.FC = () => {
             />
           )}
         </form>
+        {similarItems.length > 0 && (
+          <div className="mt-8 w-full max-w-5xl bg-white p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl mb-4">Similar Items</h2>
+            <div className="grid grid-cols-3 gap-4">
+              {similarItems.map((item, index) => (
+                <ResultCard key={index} item={item} onClick={() => showModal(item)} />
+              ))}
+            </div>
+          </div>
+        )}
+        {selectedItem && (
+          <ResultModal
+            item={selectedItem}
+            visible={isModalVisible}
+            onClose={closeModal}
+          />
+        )}
       </main>
     </div>
   );

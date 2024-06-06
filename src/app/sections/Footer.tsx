@@ -1,14 +1,12 @@
-import Image from "next/image";
+import React from 'react';
 
 const Footer = () => {
   return (
-    <div className="bg-gray-800 bg-opacity-5 py-4 lg:py-7 flex-shrink-0">
-      <div className="flex justify-center items-center ">
-        <p className=" hidden pr-2 text-twc-lg lg:flex">
-          All rights reserved
-        </p>
+    <footer style={{ backgroundColor: '#1e3a8a', color: '#ffffff', padding: '20px 0', textAlign: 'center' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px' }}>
+        <p style={{ margin: '0', fontSize: '1rem' }}>© 2024 Enhancing Lost and Found Systems with Multi-Modal Deep Learning. All rights reserved.</p>
       </div>
-    </div>
+    </footer>
   );
 };
 

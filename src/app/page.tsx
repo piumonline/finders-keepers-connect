@@ -7,6 +7,12 @@ import Social from "./sections/social/Socials";
 import Footer from "./sections/Footer";
 import Navbar from "@/components/navBar";
 import Results from "./sections/social/Results";
+import Features from '@/components/features';
+import Newsletter from '@/components/newsletter';
+import Team from '@/components/Team';
+import { Divider } from 'antd';
+
+
 
 const Home: React.FC = () => {
   const [location, setLocation] = useState<string>('');
@@ -15,39 +21,44 @@ const Home: React.FC = () => {
     <main>
       <Navbar />
       <Hero />
-      <div className="px-7 lg:px-[7.25rem]">
-        <div className="flex w-full mx-auto lg:gap-10 relative -top-4 lg:-top-10 max-w-7xl flex-col lg:flex-row lg:justify-between space-y-[1.88rem] lg:space-y-0">
-          <div className="flex flex-col w-full lg:w-[50%]">
-            <Card
-              imageSrc="/discover.svg"
-              altText="discover_logo"
-              title="Advanced Matching Algorithms"
-              description="Our service harnesses the power of three innovative ML models to ensure highly accurate matches. With distinct models for text matching, image recognition, and a fusion of both, our platform offers unparalleled precision in matching lost items to their finders or owners."
-              buttonText="Schedule a Meeting >"
-              className="h-full"
-            />
-          </div>
-          <div className="flex flex-col w-full lg:w-[50%]">
-            <Card
-              imageSrc="/discover.svg"
-              altText="sales_suite_logo"
-              title="User-Friendly Interface"
-              description="Our streamlined process is designed with your convenience in mind. With just a few clicks, you can swiftly upload images and furnish comprehensive descriptions, all without any unnecessary complications. Our intuitive interface guides you through each step seamlessly, ensuring that your submission is both effortless and thorough."
-              buttonText="Schedule a Meeting >"
-              className="h-full"
-            />
-          </div>
-          <div className="flex flex-col w-full lg:w-[50%]">
-            <Card
-              imageSrc="/discover.svg"
-              altText="sales_suite_logo"
-              title="Community Driven"
-              description="Our platform does more than just reunite belongings with their owners; it builds a supportive network of individuals united by the spirit of helpfulness and mutual respect. By participating in our service, you contribute to a vibrant community that values connection and care."
-              buttonText="Schedule a Meeting >"
-              className="h-full"
-            />
-          </div>
-        </div>
+      {/* short divider */}
+      <div>
+      <Divider style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }} />
+    </div>
+      <Team />
+      <div className="px-7 lg:px-[7.25rem] mt-10 lg:mt-20">
+      <div className="flex w-full mx-auto lg:gap-10 relative -top-4 lg:-top-10 max-w-7xl flex-col lg:flex-row lg:justify-between space-y-[1.88rem] lg:space-y-0">
+      <div className="flex flex-col w-full lg:w-[50%]" data-aos="fade-up">
+        <Card
+          imageSrc="/discover.svg"
+          altText="discover_logo"
+          title="Advanced Matching Algorithms"
+          description="Our service harnesses the power of three innovative ML models to ensure highly accurate matches. With distinct models for text matching, image recognition, and a fusion of both, our platform offers unparalleled precision in matching lost items to their finders or owners."
+          buttonText="Schedule a Meeting >"
+          className="h-full"
+        />
+      </div>
+      <div className="flex flex-col w-full lg:w-[50%]" data-aos="fade-up" data-aos-delay="100">
+        <Card
+          imageSrc="/discover.svg"
+          altText="sales_suite_logo"
+          title="User-Friendly Interface"
+          description="Our streamlined process is designed with your convenience in mind. With just a few clicks, you can swiftly upload images and furnish comprehensive descriptions, all without any unnecessary complications. Our intuitive interface guides you through each step seamlessly, ensuring that your submission is both effortless and thorough."
+          buttonText="Schedule a Meeting >"
+          className="h-full"
+        />
+      </div>
+      <div className="flex flex-col w-full lg:w-[50%]" data-aos="fade-up" data-aos-delay="200">
+        <Card
+          imageSrc="/discover.svg"
+          altText="sales_suite_logo"
+          title="Community Driven"
+          description="Our platform does more than just reunite belongings with their owners; it builds a supportive network of individuals united by the spirit of helpfulness and mutual respect. By participating in our service, you contribute to a vibrant community that values connection and care."
+          buttonText="Schedule a Meeting >"
+          className="h-full"
+        />
+      </div>
+    </div>
         <Social />
         {location === "homagama" ? (
           <div>
@@ -123,6 +134,8 @@ const Home: React.FC = () => {
           </div>
         )}
       </div>
+
+      <Features />
       <Footer />
     </main>
   );

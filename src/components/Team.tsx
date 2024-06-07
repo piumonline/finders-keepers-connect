@@ -2,11 +2,6 @@ import React from 'react';
 import Aos from "aos";
 import "aos/dist/aos.css";
 
-// Importing images
-import madushikaImage from './team/Dr.Nalaka.jpg';
-import dhanawardhanaImage from '/img/team/Piumal.jpg';
-import chalanaImage from '/img/team/Chalana.jpg';
-import abeywardanaImage from '/img/team/Abewardhana.jpg';
 
 const Team = () => {
   const supervisors = [

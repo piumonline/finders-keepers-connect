@@ -23,7 +23,9 @@ const Home: React.FC = () => {
       <Hero />
       {/* short divider */}
       <div>
-      <Divider />
+      <div>
+      <Divider className="custom-divider" />
+    </div>
     </div>
       <Team />
       <Features />

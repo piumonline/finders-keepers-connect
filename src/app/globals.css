@@ -16,3 +16,41 @@
 .gradient-bg {
   background: linear-gradient(180deg, #FFF 0%, #C3F0FE 42.7%, #B5B2DE 100%);
 }
+
+
+.bttn {
+  box-shadow: 0 0 0 rgba(30, 34, 255, 0);
+  -webkit-animation: pulse 1s infinite;
+  animation: pulse 2s infinite;
+  border-radius: 8px;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(7, 131, 255, 0.8);
+  }
+  70% {
+      box-shadow: 0 0 0 10px rgba(7, 131, 255,0.4);
+  }
+  100% {
+      box-shadow: 0 0 0 0 rgba(7, 131, 255,0.8);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(7, 131, 255,0.7);
+  }
+  70% {
+      box-shadow: 0 0 0 10px rgba(7, 131, 255,0);
+  }
+  100% {
+      box-shadow: 0 0 0 0 rgba(7, 131, 255,0);
+  }
+}
+
+
+.customDivider {
+  width: 50%; 
+  margin: 0 auto;
+}

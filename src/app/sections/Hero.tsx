@@ -4,16 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import { Button } from "antd";
-import { ArrowRightOutlined } from "@ant-design/icons";
 import Aos from "aos";
-import "aos/dist/aos.css";
 
 // Updated direct download link
 const pdfUrl = "https://drive.google.com/uc?export=download&id=1rn7Q5jbzPTrkQcEYq4xamtxc3xqx3v3G";
 
 const handleOpenInNewTab = () => {
   // This will open the PDF in a new tab
-  window.open(pdfUrl, '_blank');
+  window.open(pdfUrl, "_blank");
 };
 
 const Hero = () => {
@@ -38,8 +36,9 @@ const Hero = () => {
         </p>
         <div className="space-x-4 lg:pt-[3.44rem] flex flex-row shrink justify-center lg:justify-start">
           <Link href="/find">
-            <Button type="primary" size="large" className="pulsing-button">
-              Report Lost/Found Item <ArrowRightOutlined />
+            <Button type="primary" size="large" className="bttn flex items-center">
+              Report Lost/Found Item
+              <Image src="/img/bolt.svg" alt="bolt icon" width={20} height={20} className="ml-2" />
             </Button>
           </Link>
         </div>

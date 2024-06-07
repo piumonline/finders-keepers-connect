@@ -23,9 +23,10 @@ const Home: React.FC = () => {
       <Hero />
       {/* short divider */}
       <div>
-      <Divider style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px' }} />
+      <Divider />
     </div>
       <Team />
+      <Features />
       <div className="px-7 lg:px-[7.25rem] mt-10 lg:mt-20">
       <div className="flex w-full mx-auto lg:gap-10 relative -top-4 lg:-top-10 max-w-7xl flex-col lg:flex-row lg:justify-between space-y-[1.88rem] lg:space-y-0">
       <div className="flex flex-col w-full lg:w-[50%]" data-aos="fade-up">
@@ -135,7 +136,7 @@ const Home: React.FC = () => {
         )}
       </div>
 
-      <Features />
+      
       <Footer />
     </main>
   );

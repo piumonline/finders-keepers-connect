@@ -1,20 +1,43 @@
-import React from 'react';
-import { Card } from 'antd';
+import React from "react";
+import { Card, Tag } from "antd";
 
 interface ResultCardProps {
   item: any;
   onClick: () => void;
 }
 
+const getColorForSimilarity = (similarity: number): string => {
+  if (similarity >= 0.75) return "green";
+  if (similarity >= 0.5) return "yellow";
+  return "red";
+};
+
 const ResultCard: React.FC<ResultCardProps> = ({ item, onClick }) => {
+  const similarityPercentage = (item.total_similarity * 100).toFixed(2);
+  const color = getColorForSimilarity(item.total_similarity);
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = '/img-placeholder.jpg';
+  };
+
   return (
     <Card
       hoverable
-      cover={<img alt={item.description} src={`https://images.unsplash.com/photo-1584917865442-de89df76afd3?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`} />}
       onClick={onClick}
-      className="w-32 h-32"
+      className="w-52 h-52 justify-center"
     >
-      <Card.Meta description={`Score: ${item.total_similarity.toFixed(2)}`} />
+      <img
+        src={`/img-placeholder.jpg`}
+        alt={item.description}
+        className="object-cover rounded-lg mb-4"
+        onError={handleImageError}
+      />
+      <Tag
+        color={color}
+        className="w-full text-center mt-9 h-6 p-1 flex items-center justify-center"
+      >
+        <b>Matched = {similarityPercentage}%</b>
+      </Tag>
     </Card>
   );
 };

@@ -38,7 +38,7 @@ const Hero = () => {
           <Link href="/find">
             <Button type="primary" size="large" className="bttn flex items-center">
               Report Lost/Found Item
-              <Image src="/img/bolt.svg" alt="bolt icon" width={20} height={20} className="ml-2" />
+              <Image src="/bolt.png" alt="bolt icon" width={20} height={20} className="ml-2" />
             </Button>
           </Link>
         </div>

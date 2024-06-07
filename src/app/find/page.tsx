@@ -6,6 +6,7 @@ import Step2 from './UserDescription';
 import ProgressIndicator from '@/components/stepper';
 import ResultCard from './ResultCard';
 import ResultModal from './ResultModal';
+import Footer from "../sections/Footer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -98,7 +99,15 @@ const App: React.FC = () => {
     ];
 
     try {
-      // Simulate API response
+      // add actual API logic here
+
+   
+
+      // //temp error message  comment this
+      toast.error('Unable to submit. Server is not responding. Please try again later.');
+      return;
+
+
       setSimilarItems(dummyData);
 
       toast.success('Item submitted successfully!');
@@ -151,9 +160,9 @@ const App: React.FC = () => {
           )}
         </form>
         {similarItems.length > 0 && (
-          <div className="mt-8 w-full max-w-5xl bg-white p-6 rounded-lg shadow-md">
+          <div className="mt-8 w-full max-w-5xl bg-white p-6 rounded-lg shadow-md mb-5">
             <h2 className="text-2xl mb-4">Similar Items</h2>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 gap-4 mt-3 justify-items-center pb-10 pt-5">
               {similarItems.map((item, index) => (
                 <ResultCard key={index} item={item} onClick={() => showModal(item)} />
               ))}
@@ -167,8 +176,12 @@ const App: React.FC = () => {
             onClose={closeModal}
           />
         )}
+       
+       
       </main>
+
     </div>
+    
   );
 };
 

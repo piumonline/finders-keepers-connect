@@ -24,7 +24,7 @@ const Team = () => {
       additionalRole: 'Faculty of Technology, University of Sri Jayewardenepura',
       email: '',
       contact: '(Co-Supervisor)',
-      image: './team/Dr.Nalaka.jpg'
+      image: './img/team/Ms.Hansamali.jpeg'
     },
   ];
 

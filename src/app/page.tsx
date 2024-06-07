@@ -28,7 +28,16 @@ const Home: React.FC = () => {
       <Team />
       <Features />
       <div className="px-7 lg:px-[7.25rem] mt-10 lg:mt-20">
+      {/* Section header */}
+      <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+        <h2 className="text-5xl font-bold mb-4">Explore Our Innovative Features</h2>
+        <p className="text-xl text-gray-400">
+          Our platform is designed with a range of advanced features to make the process of finding lost items easier and more efficient. Discover how our technology can assist you in reuniting with your lost belongings.
+        </p>
+      </div>
       <div className="flex w-full mx-auto lg:gap-10 relative -top-4 lg:-top-10 max-w-7xl flex-col lg:flex-row lg:justify-between space-y-[1.88rem] lg:space-y-0">
+      
+      
       <div className="flex flex-col w-full lg:w-[50%]" data-aos="fade-up">
         <Card
           imageSrc="/discover.svg"
@@ -60,7 +69,10 @@ const Home: React.FC = () => {
         />
       </div>
     </div>
-        <Social />
+
+
+
+        {/* <Social />
         {location === "homagama" ? (
           <div>
             <Results
@@ -133,7 +145,7 @@ const Home: React.FC = () => {
               contact="0721130433"
             />
           </div>
-        )}
+        )} */}
       </div>
 
       

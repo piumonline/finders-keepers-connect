@@ -10,13 +10,13 @@ const Navbar = () => {
     };
 
     return (
-        <nav className=" text-gray-500 pt-7 pr-24 font-bold text-lg">
+        <nav className=" text-gray-500 pt-5 pr-24 font-bold text-lg">
             <div className="container mx-auto flex items-center justify-end">
                 <div className="hidden md:flex space-x-8 gap-5">
                     <a href="#" className="hover:text-blue-300">Home</a>
                     <a href="#" className="hover:text-blue-300">About</a>
-                    <a href="#" className="hover:text-blue-300">Find or Report</a>
-                    <a href="#" className="hover:text-blue-300">Download</a>
+                    <a href="#" className="hover:text-blue-300">Our Team </a>
+                    
                 </div>
                 <button className="md:hidden" onClick={toggleMenu}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" className="w-6 h-6">

@@ -9,6 +9,7 @@ import ResultModal from './ResultModal';
 import Footer from "../sections/Footer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
 
 const App: React.FC = () => {
   const [step, setStep] = useState<number>(1);
@@ -25,6 +26,7 @@ const App: React.FC = () => {
   const [similarItems, setSimilarItems] = useState<any[]>([]);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const handleNextStep = () => {
     const { description, image, location } = formData;
@@ -67,65 +69,73 @@ const App: React.FC = () => {
       return;
     }
 
-    // Dummy data to simulate response
-    const dummyData = [
-      {
-        description: 'black womans purse',
-        image_filename: '1716895371.769643.png',
-        image_similarity: 0.7291116655005888,
-        location_similarity: 1,
-        text_similarity: 0.09315735126457052,
-        time_similarity: 1,
-        total_similarity: 0.871260404586792
-      },
-      {
-        description: 'blue backpack',
-        image_filename: '1716895371.769644.png',
-        image_similarity: 0.6752234995005888,
-        location_similarity: 0.9,
-        text_similarity: 0.12315735126457052,
-        time_similarity: 0.95,
-        total_similarity: 0.850260404586792
-      },
-      {
-        description: 'red handbag',
-        image_filename: '1716895371.769645.png',
-        image_similarity: 0.7891116655005888,
-        location_similarity: 0.8,
-        text_similarity: 0.19315735126457052,
-        time_similarity: 0.88,
-        total_similarity: 0.845260404586792
+    const reader = new FileReader();
+    reader.readAsDataURL(image);
+    reader.onload = async () => {
+      const imageBase64 = reader.result?.toString().split(',')[1];
+      try {
+        const response = await axios.post('http://localhost:5000/find_similar', {
+          description,
+          image: imageBase64,
+          type: itemType,
+          location
+        });
+
+          // Dummy data to simulate response
+    // const dummyData = [
+    //   {
+    //     description: 'black womans purse',
+    //     image_filename: '1716895371.769643.png',
+    //     image_similarity: 0.7291116655005888,
+    //     location_similarity: 1,
+    //     text_similarity: 0.09315735126457052,
+    //     time_similarity: 1,
+    //     total_similarity: 0.871260404586792
+    //   },
+    //   {
+    //     description: 'blue backpack',
+    //     image_filename: '1716895371.769644.png',
+    //     image_similarity: 0.6752234995005888,
+    //     location_similarity: 0.9,
+    //     text_similarity: 0.12315735126457052,
+    //     time_similarity: 0.95,
+    //     total_similarity: 0.850260404586792
+    //   },
+    //   {
+    //     description: 'red handbag',
+    //     image_filename: '1716895371.769645.png',
+    //     image_similarity: 0.7891116655005888,
+    //     location_similarity: 0.8,
+    //     text_similarity: 0.19315735126457052,
+    //     time_similarity: 0.88,
+    //     total_similarity: 0.845260404586792
+    //   }
+    // ];
+
+        setSimilarItems(response.data);
+
+        toast.success('Item submitted successfully!');
+        setFormData({
+          description: '',
+          image: null,
+          itemType: 'lost',
+          location: '',
+          name: '',
+          email: '',
+          phone: '',
+          imagePreview: null
+        });
+        setStep(1);
+        setIsFormSubmitted(true);
+      } catch (error) {
+        console.error('Error finding similar items:', error);
+        toast.error('Failed to submit item. Please try again.');
       }
-    ];
-
-    try {
-      // add actual API logic here
-
-   
-
-      // //temp error message  comment this
-      toast.error('Unable to submit. Server is not responding. Please try again later.');
-      return;
-
-
-      setSimilarItems(dummyData);
-
-      toast.success('Item submitted successfully!');
-      setFormData({
-        description: '',
-        image: null,
-        itemType: 'lost',
-        location: '',
-        name: '',
-        email: '',
-        phone: '',
-        imagePreview: null
-      });
-      setStep(1);
-    } catch (error) {
-      console.error('Error finding similar items:', error);
-      toast.error('Failed to submit item. Please try again.');
-    }
+    };
+    reader.onerror = (error) => {
+      console.error('Error reading image file:', error);
+      toast.error('Failed to read image file.');
+    };
   };
 
   const showModal = (item: any) => {
@@ -138,11 +148,33 @@ const App: React.FC = () => {
     setIsModalVisible(false);
   };
 
+  const handleFeedback = async (isCorrect: boolean) => {
+    if (selectedItem) {
+      const { text_similarity, image_similarity, location_similarity, time_similarity, similarity } = selectedItem;
+      try {
+        await axios.post('http://localhost:5000/feedback', {
+          text_similarity,
+          image_similarity,
+          location_similarity,
+          time_similarity,
+          similarity,
+          is_correct: isCorrect
+        });
+        toast.success('Feedback submitted successfully!');
+        closeModal();
+      } catch (error) {
+        console.error('Error submitting feedback:', error);
+        toast.error('Failed to submit feedback. Please try again.');
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center">
       <ToastContainer />
       <main className="flex flex-col items-center mt-8 w-full">
         <ProgressIndicator step={step} setStep={setStep} />
+        {!isFormSubmitted && (
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-5xl">
           {step === 1 ? (
             <Step1
@@ -159,12 +191,13 @@ const App: React.FC = () => {
             />
           )}
         </form>
+        )}
         {similarItems.length > 0 && (
-          <div className="mt-8 w-full max-w-5xl bg-white p-6 rounded-lg shadow-md mb-5">
+          <div className="mt-8 w-full max-w-5xl p-6 ">
             <h2 className="text-2xl mb-4">Similar Items</h2>
-            <div className="grid grid-cols-3 gap-4 mt-3 justify-items-center pb-10 pt-5">
+            <div className="flex flex-col gap-10">
               {similarItems.map((item, index) => (
-                <ResultCard key={index} item={item} onClick={() => showModal(item)} />
+                <ResultCard key={index} item={item} onClick={() => showModal(item)} onFeedback={handleFeedback} />
               ))}
             </div>
           </div>
@@ -176,10 +209,7 @@ const App: React.FC = () => {
             onClose={closeModal}
           />
         )}
-       
-       
       </main>
-
     </div>
     
   );

@@ -15,7 +15,8 @@ const ResultModal: React.FC<ResultModalProps> = ({ item, visible, onClose }) => 
       onCancel={onClose}
       footer={null}
     >
-      <img src={`path_to_images/${item.image_filename}`} alt={item.description} className="w-full h-48 object-cover rounded-lg mb-4" />
+      {/* `http://localhost:5000/images/${item.image_filename}` */}
+      <img src={`http://localhost:5000/images/${item.image_filename}`} alt={item.description} className="w-full h-48 object-cover rounded-lg mb-4" />
       <p><strong>Description:</strong> {item.description}</p>
       <p><strong>Image Similarity:</strong> {item.image_similarity}</p>
       <p><strong>Location Similarity:</strong> {item.location_similarity}</p>

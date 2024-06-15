@@ -58,7 +58,7 @@ const Team = () => {
 
           {/* Section header */}
           <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center', paddingBottom: '40px' }} data-aos="fade-up">
-            <h2 className="text-5xl font-bold mb-4">Research Team</h2>
+            <h2 className="text-5xl font-bold mb-4 ">Research Team</h2>
           </div>
 
           {/* Supervisors */}

@@ -11,6 +11,7 @@ import Features from '@/components/features';
 import Newsletter from '@/components/newsletter';
 import Team from '@/components/Team';
 import { Divider } from 'antd';
+import Zigzag from '@/components/zigzag';
 
 
 
@@ -29,6 +30,7 @@ const Home: React.FC = () => {
     </div>
       <Team />
       <Features />
+      <Zigzag />
       <div className="px-7 lg:px-[7.25rem] mt-10 lg:mt-20">
       {/* Section header */}
       <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">

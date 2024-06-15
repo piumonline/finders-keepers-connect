@@ -173,28 +173,32 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col items-center">
       <ToastContainer />
       <main className="flex flex-col items-center mt-8 w-full">
-        <ProgressIndicator step={step} setStep={setStep} />
+        
         {!isFormSubmitted && (
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-5xl">
-          {step === 1 ? (
-            <Step1
-              formData={formData}
-              handleChange={handleChange}
-              handleImageChange={handleImageChange}
-              handleNextStep={handleNextStep}
-            />
-          ) : (
-            <Step2
-              formData={formData}
-              handleChange={handleChange}
-              handlePreviousStep={handlePreviousStep}
-            />
-          )}
-        </form>
+          <>
+            <ProgressIndicator step={step} setStep={setStep} />
+            <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-5xl">
+              {step === 1 ? (
+                <Step1
+                  formData={formData}
+                  handleChange={handleChange}
+                  handleImageChange={handleImageChange}
+                  handleNextStep={handleNextStep}
+                />
+              ) : (
+                <Step2
+                  formData={formData}
+                  handleChange={handleChange}
+                  handlePreviousStep={handlePreviousStep}
+                />
+              )}
+            </form>
+        </>
+
         )}
         {similarItems.length > 0 && (
-          <div className="mt-8 w-full max-w-5xl p-6 ">
-            <h2 className="text-2xl mb-4">Similar Items</h2>
+          <div className="mt-2 w-full max-w-5xl p-6 ">
+            <h2 className="text-3xl mb-8 font-bold text-center text-blue-500">Similar Items Found</h2>
             <div className="flex flex-col gap-10">
               {similarItems.map((item, index) => (
                 <ResultCard key={index} item={item} onClick={() => showModal(item)} onFeedback={handleFeedback} />

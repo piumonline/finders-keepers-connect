@@ -86,6 +86,54 @@ const App: React.FC = () => {
 
         setSimilarItems(response.data);
 
+        // #################### Dummy data to simulate response   #################### 
+    // const dummyData = [
+    //   {
+    //     description: 'black womans purseblack womans purseblack womans purseblack womans purseblack womans purseblack womans purse',
+    //     image_filename: '1716895371.769643.png',
+    //     image_similarity: 0.7291116655005888,
+    //     location_similarity: 1,
+    //     time_similarity: 0.95,
+    //     text_similarity: 0.09315735126457052,
+    //     total_similarity: 0.871260404586792,
+
+    //     reported_name: 'John Doe',
+    //     reported_contact: '07512345678',
+    //     reported_date: '2021-09-01',
+    //     location: 'London'
+    //   },
+    //   {
+    //     description: 'black womans purseblack womans purseblack womans purseblack womans purseblack womans purseblack womans purse',
+    //     image_filename: '1716895371.769643.png',
+    //     image_similarity: 0.7291116655005888,
+    //     location_similarity: 1,
+    //     time_similarity: 0.95,
+    //     text_similarity: 0.09315735126457052,
+    //     total_similarity: 0.871260404586792,
+
+    //     reported_name: 'John Doe',
+    //     reported_contact: '07512345678',
+    //     reported_date: '2021-09-01',
+    //     location: 'London'
+    //   },
+    //   {
+    //     description: 'black womans purseblack womans purseblack womans purseblack womans purseblack womans purseblack womans purse',
+    //     image_filename: '1716895371.769643.png',
+    //     image_similarity: 0.7291116655005888,
+    //     location_similarity: 1,
+    //     time_similarity: 0.95,
+    //     text_similarity: 0.09315735126457052,
+    //     total_similarity: 0.871260404586792,
+
+    //     reported_name: 'John Doe',
+    //     reported_contact: '07512345678',
+    //     reported_date: '2021-09-01',
+    //     location: 'London'
+    //   }
+    // ];
+
+    // setSimilarItems(dummyData);
+
         toast.success('Item submitted successfully!');
         setFormData({
           description: '',

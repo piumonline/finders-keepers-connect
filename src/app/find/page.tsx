@@ -78,39 +78,11 @@ const App: React.FC = () => {
           description,
           image: imageBase64,
           type: itemType,
-          location
+          location,
+          name,
+          email,
+          phone
         });
-
-          // Dummy data to simulate response
-    // const dummyData = [
-    //   {
-    //     description: 'black womans purse',
-    //     image_filename: '1716895371.769643.png',
-    //     image_similarity: 0.7291116655005888,
-    //     location_similarity: 1,
-    //     text_similarity: 0.09315735126457052,
-    //     time_similarity: 1,
-    //     total_similarity: 0.871260404586792
-    //   },
-    //   {
-    //     description: 'blue backpack',
-    //     image_filename: '1716895371.769644.png',
-    //     image_similarity: 0.6752234995005888,
-    //     location_similarity: 0.9,
-    //     text_similarity: 0.12315735126457052,
-    //     time_similarity: 0.95,
-    //     total_similarity: 0.850260404586792
-    //   },
-    //   {
-    //     description: 'red handbag',
-    //     image_filename: '1716895371.769645.png',
-    //     image_similarity: 0.7891116655005888,
-    //     location_similarity: 0.8,
-    //     text_similarity: 0.19315735126457052,
-    //     time_similarity: 0.88,
-    //     total_similarity: 0.845260404586792
-    //   }
-    // ];
 
         setSimilarItems(response.data);
 
@@ -193,7 +165,7 @@ const App: React.FC = () => {
                 />
               )}
             </form>
-        </>
+          </>
 
         )}
         {similarItems.length > 0 && (

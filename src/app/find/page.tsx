@@ -231,11 +231,9 @@ const App: React.FC = () => {
             <h2 className="text-3xl mb-8 font-bold text-center text-blue-500">Similar Items Found</h2>
             <div className="flex flex-col gap-10">
               {similarItems.map((item, index) => (
-                <>
                 <ResultCard key={index} item={item} onClick={() => showModal(item)} onFeedback={handleFeedback} />
-                <Button type="primary" className='bg-blue-400 max-w-40' onClick={() => setIsFormSubmitted(false)}>Submit another item</Button>
-                </>
               ))}
+              <Button type="primary" className='bg-blue-400 max-w-40' onClick={() => setIsFormSubmitted(false)}>Submit another item</Button>
             </div>
           </div>
         )}

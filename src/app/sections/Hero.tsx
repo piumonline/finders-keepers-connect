@@ -20,9 +20,9 @@ const Hero = () => {
   }, []);
 
   return (
-    <section className="max-w-screen-2xl mx-auto text-center lg:text-start text-twc-gray mt-5 lg:mt-0 space-y-28 lg:flex justify-between items-center">
+    <section className="max-w-screen-2xl mx-auto text-center lg:text-start text-twc-gray mt-5 lg:mt-0 space-y-28 lg:flex justify-between items-center " >
       <div data-aos="fade-right" className="animate-fade-up px-7 lg:pl-[13rem] max-w-lg lg:max-w-3xl mx-auto lg:mx-0">
-        <div>
+        <div background-image="url('/public/img/bg-hero.png')" background-size="cover" background-position="center">
           <h1 className="text-twc-2xl lg:text-twc-4xl leading-[3.5rem]">
             <span className="gradient-text">Finders Keepers Connect</span>
           </h1>

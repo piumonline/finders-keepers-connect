@@ -12,6 +12,7 @@ import Newsletter from '@/components/newsletter';
 import Team from '@/components/Team';
 import { Divider } from 'antd';
 import Zigzag from '@/components/zigzag';
+import Overview from '@/components/overview';
 
 
 
@@ -29,6 +30,7 @@ const Home: React.FC = () => {
     </div>
     </div>
       <Team />
+      <Overview />
       <Features />
       <Zigzag />
       <div className="px-7 lg:px-[7.25rem] mt-10 lg:mt-20">

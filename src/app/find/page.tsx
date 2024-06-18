@@ -27,6 +27,7 @@ const App: React.FC = () => {
     imagePreview: null,
   });
   const [similarItems, setSimilarItems] = useState<any[]>([]);
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState<boolean[]>([]);
   const [selectedItem, setSelectedItem] = useState<any>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
@@ -96,6 +97,7 @@ const App: React.FC = () => {
 
         console.log("Similar items:", response.data);
         setSimilarItems(response.data);
+        setFeedbackSubmitted(new Array(response.data.length).fill(false));
 
         toast.success("Item submitted successfully!");
         setFormData({
@@ -147,7 +149,9 @@ const App: React.FC = () => {
           is_correct: isCorrect,
         });
         toast.success("Feedback submitted successfully!");
-        closeModal();
+        const newFeedbackSubmitted = [...feedbackSubmitted];
+        newFeedbackSubmitted[index] = true;
+        setFeedbackSubmitted(newFeedbackSubmitted);
       } catch (error) {
         console.error("Error submitting feedback:", error);
         toast.error("Failed to submit feedback. Please try again.");
@@ -212,6 +216,7 @@ const App: React.FC = () => {
                   onClick={() => showModal(item)}
                   onFeedback={() => handleFeedback(index, true)} // passing true for correct match
                   onFeedbackIncorrect={() => handleFeedback(index, false)} // passing false for incorrect match
+                  feedbackSubmitted={feedbackSubmitted[index]}
                 />
               ))}
               <Link href={'http://localhost:3000/find'}>

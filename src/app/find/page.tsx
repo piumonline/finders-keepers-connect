@@ -136,9 +136,10 @@ const App: React.FC = () => {
 
   const handleFeedback = async (index: number, isCorrect: boolean) => {
     const selectedItem = similarItems[index];
+    const user_email = formData.email;  // Get the user's email from formData
     console.log("Feedback:", isCorrect, selectedItem);
     if (selectedItem) {
-      const { text_similarity, image_similarity, location_similarity, time_similarity, similarity } = selectedItem;
+      const { text_similarity, image_similarity, location_similarity, time_similarity, similarity, email, name, phone, image_filename, description } = selectedItem;
       try {
         await axios.post("http://localhost:5000/feedback", {
           text_similarity,
@@ -147,6 +148,11 @@ const App: React.FC = () => {
           time_similarity,
           total_similarity: similarity,
           is_correct: isCorrect,
+          other_party_email: email,  // Add other party's email
+          other_party_name: name,  // Add other party's name
+          other_party_phone: phone,  // Add other party's phone
+          image_filename,  // Add image filename
+        description  // Add description
         });
         toast.success("Feedback submitted successfully!");
         const newFeedbackSubmitted = [...feedbackSubmitted];
@@ -158,6 +164,7 @@ const App: React.FC = () => {
       }
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center w-screen">

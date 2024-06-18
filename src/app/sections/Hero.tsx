@@ -32,11 +32,11 @@ const Hero = () => {
         </div>
         <div className="hidden lg:flex w-[21.75rem] h-[0.0625rem] opacity-40 bg-black my-10"></div>
         <p className="text-twc-md lg:text-base font-medium tracking-twc-tight leading-6 lg:leading-7 py-[2.19rem] lg:py-0 text-gray-600">
-          Lost a cherished item? Found something that&apos;s not yours? Finders Keepers Connect bridges the gap between lost and found using cutting-edge machine learning technology. Our platform isn&apos;t just a database of lost and found items; it&apos;s a powerful tool that utilizes sophisticated AI to analyze and match lost items with their rightful owners.
+          Lost a cherished item? <br></br>Found something that&apos;s not yours? Finders Keepers Connect bridges the gap between lost and found using cutting-edge machine learning technology. Our platform isn&apos;t just a database of lost and found items; it&apos;s a powerful tool that utilizes sophisticated AI to analyze and match lost items with their rightful owners.
         </p>
         <div className="space-x-4 lg:pt-[3.44rem] flex flex-row shrink justify-center lg:justify-start">
           <Link href="/find">
-            <Button type="primary" size="large" className="bttn flex items-center">
+            <Button type="primary" size="large" className="bttn flex items-center h-[3rem] fs-50">
               Report Lost/Found Item
               <Image src="/bolt.png" alt="bolt icon" width={20} height={20} className="ml-2" />
             </Button>

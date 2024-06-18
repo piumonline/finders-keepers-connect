@@ -11,6 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Button, Result } from "antd";
+import Link from "next/link";
 
 const App: React.FC = () => {
   const [step, setStep] = useState<number>(1);
@@ -23,6 +24,11 @@ const App: React.FC = () => {
     email: "",
     phone: "",
     address: "",
+    similarity: 0.0,
+    image_similarity: 0.0,
+    location_similarity: 0.0,
+    time_similarity: 0.0,
+    text_similarity: 0.0,
     imagePreview: null,
   });
   const [similarItems, setSimilarItems] = useState<any[]>([]);
@@ -67,9 +73,9 @@ const App: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { description, image, itemType, location, name, email, phone } =
+    const { description, image, itemType, location, name, email, phone, address } =
       formData;
-    if (!name || !email || !phone) {
+    if (!name || !email || !phone || !address || !description) {
       toast.error("Please fill out all user details.");
       return;
     }
@@ -90,7 +96,8 @@ const App: React.FC = () => {
           location,
           name,
           email,
-          phone
+          phone,
+          address
         });
 
         setSimilarItems(response.data);
@@ -156,6 +163,11 @@ const App: React.FC = () => {
           email: "",
           phone: "",
           address: "",
+          similarity: 0.0,
+          image_similarity: 0.0,
+          location_similarity: 0.0,
+          time_similarity: 0.0,
+          text_similarity: 0.0,
           imagePreview: null,
         });
         setStep(1);
@@ -210,7 +222,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center w-screen ">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center w-screen">
       <ToastContainer />
       <main className="flex flex-col items-center mt-8 w-full">
         {!isFormSubmitted && (
@@ -254,15 +266,14 @@ const App: React.FC = () => {
                   className="bg-blue-400"
                   onClick={() => setIsFormSubmitted(false)}
                 >
-                  Submit Another Item
+                  Back to Home
                 </Button>
                 
               ]}
             />
-          
           </div>
         )}
-        {similarItems.length > 0 && (
+        { isFormSubmitted && similarItems.length > 0 && (
           <div className="mt-2 w-full max-w-5xl p-6 ">
             <h2 className="text-3xl mb-8 font-bold text-center text-blue-500">
               Similar Items Found
@@ -276,21 +287,23 @@ const App: React.FC = () => {
                     onClick={() => showModal(item)}
                     onFeedback={handleFeedback}
                   />
-                  <Button
+                  {/* <Button
                     type="primary"
                     className="bg-blue-400 max-w-40"
                     onClick={() => setIsFormSubmitted(false)}
                   >
                     Submit another item
-                  </Button>
+                  </Button> */}
                 </>
               ))}
-              <Button type="primary" className='bg-blue-400 max-w-40' onClick={() => setIsFormSubmitted(false)}>Submit another item</Button>
+              <Link href={'http://localhost:3000/find'} >
+                <Button type="primary" className='bg-blue-400 max-w-40' onClick={() => setIsFormSubmitted(false)}> Submit another item </Button>
+              </Link>
             </div>
           </div>
         )}
         {selectedItem && (
-          <ResultModal
+          <ResultModal  
             item={selectedItem}
             visible={isModalVisible}
             onClose={closeModal}

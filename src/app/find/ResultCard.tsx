@@ -35,6 +35,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ item, onClick, onFeedback }) =>
       <div className=" ml-10 mt-2 flex flex-col ">
         <p>{item.description}</p>
         <p>{item.location}</p>
+        <p>{item.total_similarity}</p>
         <div className="mt-2 flex space-x-2">
           <Button type="primary" className='bg-blue-400' onClick={() => onFeedback(true)}>Correct</Button>
           <Button type="default" onClick={() => onFeedback(false)}>Incorrect</Button>

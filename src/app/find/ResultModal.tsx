@@ -45,6 +45,9 @@ const ResultModal: React.FC<ResultModalProps> = ({
             <p className="mb-2">
               <strong>Phone:</strong> {item.phone}
             </p>
+            <p className="mb-2">
+              <strong>Address:</strong> {item.address}
+            </p>
           </TabPane>
         </Tabs>
       </Card>

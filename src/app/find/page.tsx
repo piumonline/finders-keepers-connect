@@ -10,6 +10,7 @@ import Footer from "../sections/Footer";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { Button } from 'antd';
 
 const App: React.FC = () => {
   const [step, setStep] = useState<number>(1);
@@ -21,6 +22,7 @@ const App: React.FC = () => {
     name: '',
     email: '',
     phone: '',
+    address: '',
     imagePreview: null
   });
   const [similarItems, setSimilarItems] = useState<any[]>([]);
@@ -95,6 +97,7 @@ const App: React.FC = () => {
           name: '',
           email: '',
           phone: '',
+          address: '',
           imagePreview: null
         });
         setStep(1);
@@ -121,6 +124,7 @@ const App: React.FC = () => {
   };
 
   const handleFeedback = async (isCorrect: boolean) => {
+    console.log('Feedback:', isCorrect, selectedItem)
     if (selectedItem) {
       const { text_similarity, image_similarity, location_similarity, time_similarity, similarity } = selectedItem;
       try {
@@ -142,7 +146,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center w-screen ">
       <ToastContainer />
       <main className="flex flex-col items-center mt-8 w-full">
         
@@ -168,12 +172,21 @@ const App: React.FC = () => {
           </>
 
         )}
+        {isFormSubmitted && similarItems.length == 0 && (
+          <div className="mt-2 w-full max-w-5xl p-6 ">
+            <h2 className="text-3xl mb-8 font-bold text-center text-blue-500">No similar items found! We will keep you updated</h2>
+            <Button type="primary" className='bg-blue-400' onClick={() => setIsFormSubmitted(false)}>Submit another item</Button>
+          </div>
+        )}
         {similarItems.length > 0 && (
           <div className="mt-2 w-full max-w-5xl p-6 ">
             <h2 className="text-3xl mb-8 font-bold text-center text-blue-500">Similar Items Found</h2>
             <div className="flex flex-col gap-10">
               {similarItems.map((item, index) => (
+                <>
                 <ResultCard key={index} item={item} onClick={() => showModal(item)} onFeedback={handleFeedback} />
+                <Button type="primary" className='bg-blue-400 max-w-40' onClick={() => setIsFormSubmitted(false)}>Submit another item</Button>
+                </>
               ))}
             </div>
           </div>

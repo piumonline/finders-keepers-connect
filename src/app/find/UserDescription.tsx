@@ -47,6 +47,18 @@ const Step2: React.FC<Step2Props> = ({ formData, handleChange, handlePreviousSte
           placeholder="Your phone number"
         />
       </div>
+      <div className="mb-4">
+        <label htmlFor="phone" className="block text-gray-700 font-semibold">Address</label>
+        <input
+          type="address"
+          id="address"
+          name="address"
+          value={formData.phone}
+          onChange={handleChange}
+          className="w-full mt-2 p-2 border border-gray-300 rounded"
+          placeholder="Your address"
+        />
+      </div>
       <div className="flex justify-end space-x-4">
         <button
           type="button"

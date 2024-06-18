@@ -100,58 +100,9 @@ const App: React.FC = () => {
           address
         });
 
+        console.log("Similar items:", response.data)
+
         setSimilarItems(response.data);
-
-        // #################### Dummy data to simulate response   ####################
-        // const dummyData = [
-        //   {
-        //     description:
-        //       "black womans purseblack womans purseblack womans purseblack womans purseblack womans purseblack womans purse",
-        //     image_filename: "1716895371.769643.png",
-        //     image_similarity: 0.7291116655005888,
-        //     location_similarity: 1,
-        //     time_similarity: 0.95,
-        //     text_similarity: 0.09315735126457052,
-        //     total_similarity: 0.871260404586792,
-
-        //     reported_name: "John Doe",
-        //     reported_contact: "07512345678",
-        //     reported_date: "2021-09-01",
-        //     location: "London",
-        //   },
-        //   {
-        //     description:
-        //       "black womans purseblack womans purseblack womans purseblack womans purseblack womans purseblack womans purse",
-        //     image_filename: "1716895371.769643.png",
-        //     image_similarity: 0.7291116655005888,
-        //     location_similarity: 1,
-        //     time_similarity: 0.95,
-        //     text_similarity: 0.09315735126457052,
-        //     total_similarity: 0.871260404586792,
-
-        //     reported_name: "John Doe",
-        //     reported_contact: "07512345678",
-        //     reported_date: "2021-09-01",
-        //     location: "London",
-        //   },
-        //   {
-        //     description:
-        //       "black womans purseblack womans purseblack womans purseblack womans purseblack womans purseblack womans purse",
-        //     image_filename: "1716895371.769643.png",
-        //     image_similarity: 0.7291116655005888,
-        //     location_similarity: 1,
-        //     time_similarity: 0.95,
-        //     text_similarity: 0.09315735126457052,
-        //     total_similarity: 0.871260404586792,
-
-        //     reported_name: "John Doe",
-        //     reported_contact: "07512345678",
-        //     reported_date: "2021-09-01",
-        //     location: "London",
-        //   },
-        // ];
-
-        // setSimilarItems([]);
 
         toast.success("Item submitted successfully!");
         setFormData({
@@ -209,7 +160,7 @@ const App: React.FC = () => {
           image_similarity,
           location_similarity,
           time_similarity,
-          similarity,
+          total_similarity: similarity,
           is_correct: isCorrect,
         });
         toast.success("Feedback submitted successfully!");
@@ -251,10 +202,6 @@ const App: React.FC = () => {
         )}
         {isFormSubmitted && similarItems.length == 0 && (
           <div className="mt-2 w-full max-w-5xl p-6 ">
-            {/* <h2 className="text-3xl mb-8 font-bold text-center text-blue-500">
-              No similar items found! We will keep you updated
-            </h2> */}
-
             <Result
               status="success"
               title="Successfully Submitted!"
@@ -268,12 +215,11 @@ const App: React.FC = () => {
                 >
                   Back to Home
                 </Button>
-                
               ]}
             />
           </div>
         )}
-        { isFormSubmitted && similarItems.length > 0 && (
+        {isFormSubmitted && similarItems.length > 0 && (
           <div className="mt-2 w-full max-w-5xl p-6 ">
             <h2 className="text-3xl mb-8 font-bold text-center text-blue-500">
               Similar Items Found
@@ -287,13 +233,6 @@ const App: React.FC = () => {
                     onClick={() => showModal(item)}
                     onFeedback={handleFeedback}
                   />
-                  {/* <Button
-                    type="primary"
-                    className="bg-blue-400 max-w-40"
-                    onClick={() => setIsFormSubmitted(false)}
-                  >
-                    Submit another item
-                  </Button> */}
                 </>
               ))}
               <Link href={'http://localhost:3000/find'} >

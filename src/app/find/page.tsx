@@ -24,11 +24,6 @@ const App: React.FC = () => {
     email: "",
     phone: "",
     address: "",
-    similarity: 0.0,
-    image_similarity: 0.0,
-    location_similarity: 0.0,
-    time_similarity: 0.0,
-    text_similarity: 0.0,
     imagePreview: null,
   });
   const [similarItems, setSimilarItems] = useState<any[]>([]);
@@ -73,8 +68,7 @@ const App: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { description, image, itemType, location, name, email, phone, address } =
-      formData;
+    const { description, image, itemType, location, name, email, phone, address } = formData;
     if (!name || !email || !phone || !address || !description) {
       toast.error("Please fill out all user details.");
       return;
@@ -100,8 +94,7 @@ const App: React.FC = () => {
           address
         });
 
-        console.log("Similar items:", response.data)
-
+        console.log("Similar items:", response.data);
         setSimilarItems(response.data);
 
         toast.success("Item submitted successfully!");
@@ -114,11 +107,6 @@ const App: React.FC = () => {
           email: "",
           phone: "",
           address: "",
-          similarity: 0.0,
-          image_similarity: 0.0,
-          location_similarity: 0.0,
-          time_similarity: 0.0,
-          text_similarity: 0.0,
           imagePreview: null,
         });
         setStep(1);
@@ -144,16 +132,11 @@ const App: React.FC = () => {
     setIsModalVisible(false);
   };
 
-  const handleFeedback = async (isCorrect: boolean) => {
+  const handleFeedback = async (index: number, isCorrect: boolean) => {
+    const selectedItem = similarItems[index];
     console.log("Feedback:", isCorrect, selectedItem);
     if (selectedItem) {
-      const {
-        text_similarity,
-        image_similarity,
-        location_similarity,
-        time_similarity,
-        similarity,
-      } = selectedItem;
+      const { text_similarity, image_similarity, location_similarity, time_similarity, similarity } = selectedItem;
       try {
         await axios.post("http://localhost:5000/feedback", {
           text_similarity,
@@ -179,10 +162,7 @@ const App: React.FC = () => {
         {!isFormSubmitted && (
           <>
             <ProgressIndicator step={step} setStep={setStep} />
-            <form
-              onSubmit={handleSubmit}
-              className="bg-white p-6 rounded-lg shadow-md w-full max-w-5xl"
-            >
+            <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md w-full max-w-5xl">
               {step === 1 ? (
                 <Step1
                   formData={formData}
@@ -200,8 +180,8 @@ const App: React.FC = () => {
             </form>
           </>
         )}
-        {isFormSubmitted && similarItems.length == 0 && (
-          <div className="mt-2 w-full max-w-5xl p-6 ">
+        {isFormSubmitted && similarItems.length === 0 && (
+          <div className="mt-2 w-full max-w-5xl p-6">
             <Result
               status="success"
               title="Successfully Submitted!"
@@ -220,29 +200,34 @@ const App: React.FC = () => {
           </div>
         )}
         {isFormSubmitted && similarItems.length > 0 && (
-          <div className="mt-2 w-full max-w-5xl p-6 ">
+          <div className="mt-2 w-full max-w-5xl p-6">
             <h2 className="text-3xl mb-8 font-bold text-center text-blue-500">
               Similar Items Found
             </h2>
             <div className="flex flex-col gap-10">
               {similarItems.map((item, index) => (
-                <>
-                  <ResultCard
-                    key={index}
-                    item={item}
-                    onClick={() => showModal(item)}
-                    onFeedback={handleFeedback}
-                  />
-                </>
+                <ResultCard
+                  key={index}
+                  item={item}
+                  onClick={() => showModal(item)}
+                  onFeedback={() => handleFeedback(index, true)} // passing true for correct match
+                  onFeedbackIncorrect={() => handleFeedback(index, false)} // passing false for incorrect match
+                />
               ))}
-              <Link href={'http://localhost:3000/find'} >
-                <Button type="primary" className='bg-blue-400 max-w-40' onClick={() => setIsFormSubmitted(false)}> Submit another item </Button>
+              <Link href={'http://localhost:3000/find'}>
+                <Button
+                  type="primary"
+                  className="bg-blue-400 max-w-40"
+                  onClick={() => setIsFormSubmitted(false)}
+                >
+                  Submit another item
+                </Button>
               </Link>
             </div>
           </div>
         )}
         {selectedItem && (
-          <ResultModal  
+          <ResultModal
             item={selectedItem}
             visible={isModalVisible}
             onClose={closeModal}

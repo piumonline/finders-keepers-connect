@@ -17,6 +17,10 @@
   background: linear-gradient(180deg, #FFF 0%, #C3F0FE 42.7%, #B5B2DE 100%);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 
 .bttn {
   box-shadow: 0 0 0 rgba(30, 34, 255, 0);

@@ -22,17 +22,29 @@ const Home: React.FC = () => {
   return (
     <main>
       <Navbar />
-      <Hero />
+      <section id="home">
+        <Hero />
+      </section>
       {/* short divider */}
       <div>
       <div>
       <Divider className="custom-divider" />
     </div>
     </div>
+    <section id="team">
       <Team />
+    </section>
+
+    <section id='overview'>
       <Overview />
+    </section>
+
+    <section id="features">
       <Features />
+    </section>
+    <section id="how-to">
       <Zigzag />
+    </section>
       <div className="px-7 lg:px-[7.25rem] mt-10 lg:mt-20">
       {/* Section header */}
       <div className="max-w-3xl mx-auto text-center pb-12 md:pb-20">

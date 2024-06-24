@@ -46,7 +46,7 @@ const App: React.FC = () => {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -152,7 +152,7 @@ const App: React.FC = () => {
           other_party_name: name,  // Add other party's name
           other_party_phone: phone,  // Add other party's phone
           image_filename,  // Add image filename
-        description  // Add description
+          description  // Add description
         });
         toast.success("Feedback submitted successfully!");
         const newFeedbackSubmitted = [...feedbackSubmitted];

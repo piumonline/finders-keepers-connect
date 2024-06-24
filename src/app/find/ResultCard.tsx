@@ -46,7 +46,7 @@ const ResultCard: React.FC<ResultCardProps> = ({ item, onClick, onFeedback, onFe
   return (
     <div className="h-[280px] bg-white shadow-md rounded-lg cursor-pointer hover:shadow-lg transition duration-200 flex items-center p-4 border-4xl">
       <Card
-        cover={<img alt={item.description} src={`http://localhost:5000/images/${item.image_filename}`} onError={handleImageError} />}
+        cover={<img alt={item.description} className='w-40 max-w-[20rem]' src={`http://localhost:5000/images/${item.image_filename}`} onError={handleImageError} />}
         onClick={onClick}
         className="flex items-center justify-center"
       />

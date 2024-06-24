@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Step1Props {
   formData: any;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => void;
   handleImageChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleNextStep: () => void;
 }
@@ -54,17 +54,7 @@ const Step1: React.FC<Step1Props> = ({ formData, handleChange, handleImageChange
         <div className='w-full'>
           <div className="mb-4">
             <label htmlFor="description" className="block text-gray-700 font-semibold">Text Description:</label>
-            {/* <input
-              type="text"
-              id="description"
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              className="w-full mt-2 p-2 border border-gray-300 rounded"
-              placeholder="Describe the item"
-            /> */}
             <textarea
-              type="text"
               id="description"
               name="description"
               value={formData.description}

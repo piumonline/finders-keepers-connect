@@ -84,35 +84,42 @@ const App: React.FC = () => {
     reader.onload = async () => {
       const imageBase64 = reader.result?.toString().split(",")[1];
       try {
-        const response = await axios.post('http://localhost:5000/find_similar', {
-          description,
-          image: imageBase64,
-          type: itemType,
-          location,
-          name,
-          email,
-          phone,
-          address
-        });
 
-        console.log("Similar items:", response.data);
-        setSimilarItems(response.data);
-        setFeedbackSubmitted(new Array(response.data.length).fill(false));
+        //just show temp tost massage that connection to server is not available
+        toast.error("Connection to server is not available. Please try again later.");
+        return;
 
-        toast.success("Item submitted successfully!");
-        setFormData({
-          description: "",
-          image: null,
-          itemType: "lost",
-          location: "",
-          name: "",
-          email: "",
-          phone: "",
-          address: "",
-          imagePreview: null,
-        });
-        setStep(1);
-        setIsFormSubmitted(true);
+
+
+        // const response = await axios.post('http://localhost:5000/find_similar', {
+        //   description,
+        //   image: imageBase64,
+        //   type: itemType,
+        //   location,
+        //   name,
+        //   email,
+        //   phone,
+        //   address
+        // });
+
+        // console.log("Similar items:", response.data);
+        // setSimilarItems(response.data);
+        // setFeedbackSubmitted(new Array(response.data.length).fill(false));
+
+        // toast.success("Item submitted successfully!");
+        // setFormData({
+        //   description: "",
+        //   image: null,
+        //   itemType: "lost",
+        //   location: "",
+        //   name: "",
+        //   email: "",
+        //   phone: "",
+        //   address: "",
+        //   imagePreview: null,
+        // });
+        // setStep(1);
+        // setIsFormSubmitted(true);
       } catch (error) {
         console.error("Error finding similar items:", error);
         toast.error("Failed to submit item. Please try again.");
